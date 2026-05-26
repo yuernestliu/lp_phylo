@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local environments
+.venv/
+venv/
+env/
+
+# Build / packaging outputs
+build/
+dist/
+*.egg-info/
+
+# Test / coverage outputs
+.pytest_cache/
+.coverage
+htmlcov/
+
