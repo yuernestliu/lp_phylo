@@ -21,3 +21,5 @@ dist/
 .coverage
 htmlcov/
 
+# Jupyter
+.ipynb_checkpoints/

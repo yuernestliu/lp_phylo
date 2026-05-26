@@ -1,5 +1,5 @@
 """
-Version 6.3
+Version 6.4
 Author: codex
 Revised for grouped-species distance calculation
 Date: 2026.05.22
@@ -10,6 +10,8 @@ Date: 2026.05.22
 3. get_distance_table: 一步式包装接口，同时返回距离表、名称映射和 merged lpjson。
 4. get_distances_average / get_distance_table_average: 重复计算 N 次后返回平均距离表。
 5. get_distance_table_average_from_seqs: 每轮重跑 get_ladderpath 后返回平均距离表。
+
+与 v6.3 相比，这一版将 species distance 的默认距离方法改为 dice。
 
 与 v6.0 相比，这一版按当前 duplication 语义修正了 species_info 校验：
 - 允许同一个 target ID 出现在不同 species 中；
@@ -306,7 +308,7 @@ def get_ladderpath_species(lpjson: dict, species_info: dict, verbose: bool = Fal
 
 def get_distances(
     lpjson_species: dict,
-    method: str = "jaccard",
+    method: str = "dice",
     verbose: bool = False,
 ) -> tuple[dict[str, float], dict[int, str]]:
     """
@@ -314,7 +316,7 @@ def get_distances(
 
     参数:
         lpjson_species: `get_ladderpath_species()` 的输出。
-        method: 只允许 "jaccard" 或 "dice"。
+        method: 只允许 "jaccard" 或 "dice"，默认是 "dice"。
         verbose: 是否打印中间结果。
 
     返回:
@@ -431,7 +433,7 @@ def _average_distance_tables(distance_tables: list[dict[str, float]]) -> dict[st
 
 def get_distances_average(
     lpjson_species: dict,
-    method: str = "jaccard",
+    method: str = "dice",
     n_runs: int = 10,
     verbose: bool = False,
 ) -> tuple[dict[str, float], dict[int, str]]:
@@ -440,7 +442,7 @@ def get_distances_average(
 
     参数:
         lpjson_species: `get_ladderpath_species()` 的输出。
-        method: 只允许 "jaccard" 或 "dice"。
+        method: 只允许 "jaccard" 或 "dice"，默认是 "dice"。
         n_runs: 重复计算次数，默认 10。
         verbose: 是否打印每轮和平均后的结果。
 
@@ -481,7 +483,7 @@ def get_distances_average(
 def get_distance_table(
     lpjson: dict,
     species_info: dict,
-    method: str = "jaccard",
+    method: str = "dice",
     verbose: bool = False,
 ) -> tuple[dict[str, float], dict[int, str], dict]:
     """
@@ -491,7 +493,7 @@ def get_distance_table(
     参数:
         lpjson: 原始 Ladderpath JSON。
         species_info: 物种分组信息。当前必须使用真实 target IDs。
-        method: 只允许 "jaccard" 或 "dice"，默认是 "jaccard"。
+        method: 只允许 "jaccard" 或 "dice"，默认是 "dice"。
         verbose: 是否打印中间结果。
 
     返回:
@@ -507,7 +509,7 @@ def get_distance_table(
 def get_distance_table_average(
     lpjson: dict,
     species_info: dict,
-    method: str = "jaccard",
+    method: str = "dice",
     n_runs: int = 10,
     verbose: bool = False,
 ) -> tuple[dict[str, float], dict[int, str], dict]:
@@ -518,7 +520,7 @@ def get_distance_table_average(
     参数:
         lpjson: 原始 Ladderpath JSON。
         species_info: 物种分组信息。当前必须使用真实 target IDs。
-        method: 只允许 "jaccard" 或 "dice"，默认是 "jaccard"。
+        method: 只允许 "jaccard" 或 "dice"，默认是 "dice"。
         n_runs: 重复计算次数，默认 10。
         verbose: 是否打印中间结果。
 
@@ -538,7 +540,7 @@ def get_distance_table_average(
 def get_distance_table_average_from_seqs(
     seqs,
     species_info: dict,
-    method: str = "jaccard",
+    method: str = "dice",
     n_runs: int = 10,
     verbose: bool = False,
     get_ladderpath_kwargs: dict | None = None,
@@ -552,7 +554,7 @@ def get_distance_table_average_from_seqs(
     参数:
         seqs: 传给 `ladderpath.get_ladderpath()` 的原始输入，支持 list[str] 或 dict[str, int]。
         species_info: 物种分组信息。当前必须使用每轮 lpjson 中的真实 target IDs。
-        method: 只允许 "jaccard" 或 "dice"，默认是 "jaccard"。
+        method: 只允许 "jaccard" 或 "dice"，默认是 "dice"。
         n_runs: 重复计算次数，默认 10。
         verbose: 是否打印每轮进度和最终平均结果。
         get_ladderpath_kwargs: 透传给 `ladderpath.get_ladderpath()` 的额外参数。
