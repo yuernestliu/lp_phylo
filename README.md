@@ -52,6 +52,16 @@ An executable notebook is provided at:
 examples/lp_phylo_usage.ipynb
 ```
 
+## Manuscript Data
+
+The data archive associated with the manuscript is provided as:
+
+```text
+manuscript_experiment_data.zip
+```
+
+After extraction, the archive creates a `Data/` directory containing the datasets and result files used for the manuscript and supplementary analyses. Several subdirectories include their own local `README.md` files describing the corresponding data block.
+
 ## Inputs
 
 `seqs` is passed to `ladderpath.get_ladderpath(...)`.
@@ -103,6 +113,7 @@ phylo(
 - `ladderpath_tools/species_distance.py`: species-level target merging and pairwise distance-table calculation.
 - `ladderpath_tools/phylo.py`: tree construction utilities from a distance table.
 - `examples/lp_phylo_usage.ipynb`: runnable usage example.
+- `manuscript_experiment_data.zip`: data archive associated with the manuscript.
 
 The core Ladderpath implementation is aligned with [`yuernestliu/lppack`](https://github.com/yuernestliu/lppack). This repository keeps the paper-specific phylogenetic helper interface used for the manuscript.
 
